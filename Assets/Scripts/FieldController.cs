@@ -12,6 +12,7 @@ internal class FieldController : MonoBehaviour
     public GameObject playerPrefab;
     public GameObject enemyPrefab;
     public Camera mainCamera;
+    private bool isGameEnd;
 
     public float playerSpeed = 3;
     public float enemySpeed = 2;
@@ -160,32 +161,43 @@ internal class FieldController : MonoBehaviour
         enemyCountDie++;
         if (enemyCountDie >= enemyCount)
         {
-            menuController.EndGame(true);
+            EndGame(true);
         }
+    }
+    public void EndGame(bool isWin)
+    {
+        if (!isWin)
+        {
+            player.Die();
+        }
+        isGameEnd = true;
+        menuController.ShowEndGameMenu(isWin);
     }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.RightArrow))
+        if (!isGameEnd)
         {
-            StartCoroutine(player.TryMove(Vector2Int.right));
+            if (Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                StartCoroutine(player.TryMove(Vector2Int.right));
+            }
+            if (Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                StartCoroutine(player.TryMove(Vector2Int.left));
+            }
+            if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                StartCoroutine(player.TryMove(Vector2Int.up));
+            }
+            if (Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                StartCoroutine(player.TryMove(Vector2Int.down));
+            }
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                player.Fire();
+            }
         }
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            StartCoroutine(player.TryMove(Vector2Int.left));
-        }
-        if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            StartCoroutine(player.TryMove(Vector2Int.up));
-        }
-        if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            StartCoroutine(player.TryMove(Vector2Int.down));
-        }
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            player.Fire();
-        }
-
 
     }
 }

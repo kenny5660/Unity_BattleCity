@@ -17,8 +17,9 @@ public class MenuController : MonoBehaviour
     {
         canvas = GetComponent<Canvas>();
         canvas.enabled = false;
+
     }
-    public void EndGame(bool isWin)
+    public void ShowEndGameMenu(bool isWin)
     {
         canvas.enabled = true;
         if (isWin)

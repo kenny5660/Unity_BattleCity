@@ -8,17 +8,17 @@ using UnityEngine;
 
 namespace Assets.Scripts.Logic
 {
-    public class Flag : FieldObject
+    internal class Flag : FieldObject
     {
         public GameObject explosionParticlesPrefab;
-        public MenuController menuController;
+        protected FieldController fieldController;
         void Start()
         {
-            menuController = GameObject.FindObjectOfType<MenuController>();
+            fieldController = GameObject.FindObjectOfType<FieldController>();
         }
         public override void Die()
         {
-            menuController.EndGame(false);
+            fieldController.EndGame(false);
             if (explosionParticlesPrefab)
             {
                 GameObject explosion = (GameObject)Instantiate(explosionParticlesPrefab, transform.position, explosionParticlesPrefab.transform.rotation);
